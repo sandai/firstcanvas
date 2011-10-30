@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>FirstCanvas用サンプル集-FirstCanvas</title>
+<link href="/firstcanvas/favicon.ico" rel="shortcut icon" />
+<style type="text/css">
+html, body, div, span, p, address, em, img,
+small, strong, dl, dt, dd, ol, ul, li, pre,
+h1, h2, h3, code {
+    margin: 0;
+    padding: 0;
+}
+
+article, footer, header, hgroup, nav, section pre {
+    display: block;
+}
+
+body {
+    font-family: "メイリオ",Meiryo,'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','ＭＳ Ｐゴシック',Sans-Serif;
+    padding: 20px;
+}
+
+a:link {
+    color: #17630b;
+}
+
+a:visited {
+    color: #721960;
+}
+
+a:hover {
+    color:#fff;
+    background-color:#373737;
+}
+
+h1, h2 {
+    text-shadow: 0px 0px 5px #ff8c00;
+}
+
+h1 {
+    font-size: 160%;
+    background:#000;
+    color:#fff;
+    margin: 5px 0 20px 0;
+    padding-left:10px;
+}
+
+h2 {
+    font-size: 140%;
+    background:#a10000;
+    color:#fff;
+    margin-top:20px;
+    padding-left:10px;
+    border-bottom:#000 solid 5px;
+}
+
+h3 {
+    padding: 0 10px; 
+    margin: 20px 20px 0;
+    border-left: 10px solid #ffaf00;
+}
+
+pre {
+    font-size: 120%;
+    line-height: 1.1;
+    margin:20px 5px;
+    padding:20px;
+    -webkit-box-shadow: 0px 0px 10px #000;
+    -moz-box-shadow: 0px 0px 10px #000;
+    box-shadow: 0px 0px 10px #000;
+    word-wrap:break-word;
+    white-space: pre-wrap;
+    overflow:auto;
+}
+
+pre span {
+    color:#56f;
+}
+
+section p {
+    font-size: 120%;
+    margin: 20px 20px 0;
+	word-wrap:break-word;
+}
+
+section nav {
+    font-size:120%;
+    margin:20px 20px  0 ;
+}
+
+ol, ul{
+    font-size: 120%;
+    margin: 10px 40px 0;
+}
+
+address {
+    color:#fff;
+    text-align: center;
+    background:#000;
+    margin-top:20px;
+}
+
+</style>
+</head>
+<body>
+<header>
+<p><a href="/firstcanvas/index.html">FirstCanvas</a>の補助的なサンプル。</p>
+<hgroup>
+<h1>FitstCanvas用サンプル集</h1>
+<h2 id ="table">目次</h2>
+<noscript>JavaScriptが息をしていません！</noscript>
+</hgroup>
+</header>
+<article>
+<section>
+<h2 id="beginPath">begoinPath()</h2>
+<p>canvasに赤い横線と青い横線を描くコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)のbeginPath()を入れた場合と入れない場合の違いを確認</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 赤い横線 */</span>
+ctx.beginPath();           <span>// パスを初期化</span>
+ctx.strokeStyle = '#f00';  <span>// 線を赤色にする</span>
+ctx.moveTo(50, 20);        <span>// 線の始点座標</span>
+ctx.lineTo(150, 20);       <span>// 線の終点座標</span>
+ctx.stroke();              <span>// 線を描画</span>
+
+<span>/* 青い横線 */</span>
+ctx.beginPath();           <span>// (1)</span>
+ctx.strokeStyle = '#00f';  <span>// 線を青色にする</span>
+ctx.lineTo(50, 50);
+ctx.lineTo(150, 50);
+ctx.stroke();
+</pre>
+<p>(1)の結果は2つの線がアルファベットのゼット(Z)のような形でくっついて、色も混ざります。</p>
+<p>このサンプルは違いが分かりやすいよう遠回りに書いてます。具体的には、青い横線のlineTo(50, 50)はmoveTo(50, 50)と書けば、色は混ざりますが線はくっつきません。この場合moveTo()を使うのが自然かと思いますが、もちろん正解なんてないのでどう書いても良いです。</p>
+<p>beginPath()はパスを使って線や図形など描くときは習慣的に最初に使います。円や多角形を描画させるときの準備みたいなものですね。</p>
+</section>
+<section>
+<h2 id="moveTo">moveTo(x, y)</h2>
+<p>canvasに赤い横線を2つ描くコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)のmoveTo()がlineTo()の場合どうなるか</li>
+<li>(2)のmoveTo()が無ければどうなるか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 赤い横線 */</span>
+ctx.beginPath();           <span>// パスを初期化</span>
+ctx.strokeStyle = '#f00';  <span>// 線を赤色にする</span>
+ctx.moveTo(50, 20);        <span>// 線の始点座標</span>
+ctx.lineTo(150, 20);       <span>// 線の終点座標</span>
+ctx.moveTo(50, 50);        <span>// (1)、(2)</span>
+ctx.lineTo(150, 50);
+ctx.stroke();              <span>// 線を描画</span>
+</pre>
+<p>(1)の結果は線がアルファベットのゼット(Z)の形になる。(2)の結果は直角ができる。</p>
+<p>moveTo()はサブパスを新規に生成するメソッドです。具体的には、例えば新しい線の始点となる座標を指定できるものです。これで離れた地点に線や多角形を描画することができますね。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x : サブパスの始点となるx軸の座標</li>
+<li>y : サブパスの始点となるy軸の座標</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="quadraticCurveTo">quadraticCurveTo(cpx, cpy, x, y)</h2>
+<p>canvasに二次ベジエ曲線を描くサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)制御点を理解するために引数をいじって確かめる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 二次ベジエ曲線 */</span>
+ctx.beginPath();                         <span>// パスを初期化</span>
+ctx.moveTo(10, 10);                      <span>// 線の始点座標</span>
+ctx.quadraticCurveTo(55, 100, 110, 10);  <span>// (1)</span>
+ctx.stroke();                            <span>// 線を描画</span>
+</pre>
+<p>(1)制御点はquadraticCurveTo(cpx, cpy, x, y)でいうところのcpx/cpyの引数にあたり、上記のサンプルだと座標(55,100)の値の引数。ここら辺いじってみると良いです。</p>
+<p>これは、数学から離れてイメージするとなると、まず直線を思い浮かべてみましょう。quadraticCurveToはその直線を<strong>良い感じに曲げる</strong>ことができるんです。難しいことを省けばこれだけで、あとは座標(x, y)の地点をサブパスに追加して終わりです。</p>
+<p>例えば上記のサンプルを直線にすると、</p>
+<pre>
+<span>/* 直線 */</span>
+ctx.beginPath();      <span>// パスを初期化</span>
+ctx.moveTo(10, 10);
+ctx.lineTo(110, 10);  <span>// 線の終点座標</span>
+ctx.stroke();         <span>// 線を描画</span>
+</pre>
+<p>こうなります。線の長さは違いますが、イメージとしてはこれを曲線として曲げたいときはquadraticCureveTo()を使います。こう、ぐわーんと。曲げる感じ。</p>
+<p>制御点の扱いについては少し難しいですが、<a href="http://www.html5.jp/canvas/ref/method/quadraticCurveTo.html">quadraticCurveTo() メソッド - HTML5.JP</a>での補助線つきサンプルを参考にしてください。イメージ通りの曲線を描くには少し慣れる必要がありますね。あとベジエってのはどっかの人の名前らしいです。</p>
+<p><a href="http://d.hatena.ne.jp/nitoyon/20070918/bezier_1">http://d.hatena.ne.jp/nitoyon/20070918/bezier_1</a>も参考になると思います。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>cpx : 曲線を描くための制御点となるx軸の座標。線の曲がり方が決定する。</li>
+<li>cpy : 曲線を描くための制御点となるy軸の座標。線の曲がり方が決定する。</li>
+<li>x : 曲線の終点となるx軸の座標</li>
+<li>y : 曲線の終点となるy軸の座標</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="bezierCurveTo">bezierCurveTo(cpx1, cpy1, cpx2, cpy2, x, y)</h2>
+<p>canvasに三次ベジエ曲線を描くサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)2つの制御点を理解するために引数をいじって確かめる。</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 三次ベジエ曲線 */</span>
+ctx.beginPath();                                  <span>// パスを初期化</span>
+ctx.moveTo(100, 200);                             <span>// 線の始点座標</span>
+ctx.bezierCurveTo(150, 300, 250, 100, 300, 200);  <span>// 三次ベジエ曲線</span>
+ctx.stroke( );                                    <span>// 線を描画</span>
+</pre>
+<p>(1)制御点はbezierCurveTo(cpx1, cpy1, cpx2, cpy2, x, y)でいうところのcpなんちゃらの引数です。上のサンプルだと座標(150, 300)と座標(250, 100)の部分ですね。ここらをいじいじしてみてください。</p>
+<p>サンプルは波うっている線が描かれます。quadraticCureveTo()が分かるのならばこれに制御点がもう1つ増えたと考えれば良いでしょう。頭悪そうな言い方をすれば、直線があってその直線を<strong>2回良い感じに曲げる</strong>ことができます。そして座標(x, y)の地点をサブパスに追加して終わりです</p>
+<p>quadraticCureveTo()は<strong>1回だけ良い感じに曲げられます</strong>が、このbezierCurveTo()は<strong>2回も曲げることができます。</strong>チャンスは2回あると区別しておきましょう。それ以外はこの2つのメソッドは同じです。チャンスが1回か2回かです。お得です。</p>
+<p>数学得意ならば<a href="http://d.hatena.ne.jp/nitoyon/20070918/bezier_1">http://d.hatena.ne.jp/nitoyon/20070918/bezier_1</a>が参考になると思います。というかこっち見てください。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>cpx : 曲線を描くための制御点となるx軸の座標。線の曲がり方が決定する。</li>
+<li>cpy : 曲線を描くための制御点となるy軸の座標。線の曲がり方が決定する。</li>
+<li>x : 曲線の終点となるx軸の座標</li>
+<li>y : 曲線の終点となるy軸の座標</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="arcTo">arcTo(x1, y1, x2, y2, radius)</h2>
+<p>canvasに円弧を描くサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)引数をいじって確かめる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 円弧 */</span>
+ctx.beginPath();                    <span>// パスを初期化</span>
+ctx.lineWidth = 5;                  <span>// 線の太さ</span>
+ctx.moveTo(100, 100);               <span>// 線の始点座標</span>
+ctx.arcTo(150, 150, 100, 200, 30);  <span>// (1)</span>
+ctx.lineTo(100, 200);
+ctx.stroke();                       <span>// 線を描画</span>
+</pre>
+<p>(1)引数はarcTo(x1, y1, x2, y2, radius)。x1やy1などは座標の地点で、radiusは円の半径にあたります。まずは座標は変えずradiusをいじいじしていると見えてくるものがあるかもしれません。このサンプルは逆くの字になった線を描画させています。</p>
+<p>arcTo()は簡単に言えば円弧（か楕円の円弧）を描くメソッドです。だから、たとえば上記のサンプルでarcToによって描かれた部分はどの範囲までかと言うと、下の画像のうち黒っぽいところまで。薄ピンクはlineTo()で描いています。</p>
+<img src="/firstcanvas/img/arcto01.png" />
+<p>どのようにしてこの描画が為されているかをサンプルコードを例にすると、座標(150, 150)からmoveTo(100, 100)の半直線に接する点（開始接点）と、座標(150, 150)から座標(100, 200)の半直線に接する点（終了接点）を通る半径(30)の円うち、短いほうの円弧を求めます。</p>
+<p>そしてmoveTo(100, 100)から開始接点まで直線で結び開始接点をサブパスに追加。さらに、そこから終了接点まで求めた円弧の終了接点まで結んでサブパスに追加して終わりです。あと直線は半直線ですので、直線の長さに関係なく半径から得られる円によって円弧の大きさも決まりますね。</p>
+<p>この半直線でイメージ通りの角度を出すのは難しい気がしますが。</p>
+<p>とりあえず画像を見ての通り純粋な円弧でなく直線が混じります。純粋な円弧を描くのならばarc()を使うのが無難でしょうね。</p>
+<p>これ以上のことについては、数学が得意なら<a href="http://d.hatena.ne.jp/mindcat/20100131/1264958828">http://d.hatena.ne.jp/mindcat/20100131/1264958828</a>を見ればarcTo()について理解が深まるかと思います。えー私は不得意で数式はなんだかさっぱり＞＜</p>
+<p>一応画像のコードも残しておきます。</p>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* サンプルのうちarcToの描画を分かりやすく */</span>
+ctx.beginPath();
+ctx.lineWidth = 5;
+ctx.moveTo(100, 100);
+ctx.arcTo(150, 150, 100, 200, 30);
+ctx.stroke();
+ctx.strokeStyle = 'rgba(255, 0, 0, 0.3)';
+ctx.lineTo(100, 200);
+ctx.stroke();
+</pre>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x1 : 座標(x0, y0)を通る半直線の始点となるx軸の座標</li>
+<li>y1 : 座標(x0, y0)を通る半直線の始点となるy軸の座標</li>
+<li>x2 : 座標(x1, y1)を始点とする半直線が通るx軸の座標</li>
+<li>y2 : 座標(x1, y1)を始点とする半直線が通るy軸の座標</li>
+<li>radius : 円の半径</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="arc">arc(x, y, radius, startAngle, endAngle, anticlockwise)</h2>
+<p>canvasに円弧を描くコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)Angleの値の出し方を理解する</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 半円弧 */</span>
+ctx.beginPath();                                     <span>// パスを初期化</span>
+ctx.arc(100, 100, 30, 0, 3.141592653589793, false);  <span>// (1)</span>
+ctx.stroke();                                        <span>// 線を描画</span>
+</pre>
+<p>(1)の結果は半円弧が描かれます。引数のうちstartAngleとendAngleの扱い方が重要かと思います。</p>
+<p>startAngleとendAngleの値は角度をラジアンという単位に変換したものです。角度をラジアンに変換する計算式は「radian = 角度 * Math.PI / 180」で、Math.PIはJavaScriptのMathオブジェクトのうち円周率を返すプロパティです。</p>
+<p>分かりやすくすると「radian = 角度 * 3.141592.... / 180」と言う感じ。FirstCanvasでは自動で計算結果が出るようになっていますが、実際に使うときは、</p>
+<pre>
+var startAngle = 0;
+var endAngle = 360 * Math.PI / 180;
+ctx.arg(100, 100, 30, startAngle, endAngle, false);
+</pre>
+<p>こうですね。このサンプルでは360と角度を入れているので円が描かれます(この場合Math.PI*2でも同じことです)。あとanticlockwiseについてですが、これは円弧を時計回りに描くか反時計回りに描くかを指定します。trueなら反時計回りで、falseなら時計回りです。</p>
+<p>arc()は円や扇形を描くのに便利。もちろんarcTo()でもできないこともないようですが。</p>
+<p>あと、arcを理解するためのもうひとつのサンプル。</p>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 円 */</span>
+ctx.beginPath();
+ctx.moveTo(50, 50);  <span>// 描画の始点座標</span>
+ctx.arg(150, 150, 30, 0, 6.283185307179586, false);
+ctx.stroke();
+</pre>
+<p>上記のサンプルを画像で確認してみると、</p>
+<img src="/firstcanvas/img/arc01.png" />
+<p>このように既にcanvasにサブパスがある場合、そのサブパスの終点から円の始点座標まで直線で結ばれるようになってます。そうならないためには、</p>
+<pre>
+ctx.beginPath();
+ctx.moveTo(50, 50);
+ctx.beginPath();
+ctx.arg(150, 150, 30, 0, 6.283185307179586, false);
+ctx.stroke();
+</pre>
+<p>beginPath()をarc()の前に呼び出します。円弧を描いた後はstartAngleとendAngleがサブパスに追加され、endAngleが今のサブパスの終点となります。パスは難しいなー。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x : 円弧の中心となるx軸の座標</li>
+<li>y : 円弧の中心となるy軸の座標</li>
+<li>radius : 円の半径</li>
+<li>statAngle : 円弧の始点となる角度</li>
+<li>endAngle : 円弧の終点となる角度</li>
+<li>anticlockwise : 始点から終点までが時計回りならfalseで反時計回りならtrue</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="fill">fill()</h2>
+<p>サブパスを塗りつぶしたコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)各サブパスの色を別々にするにはどうするか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+ctx.beginPath();             <span>// パスを初期化</span>
+ctx.fillStyle = '#f00';      <span>// 塗りつぶしの色を赤色に</span>
+ctx.rect(100, 100, 50, 50);  <span>// (1)</span>
+
+<span>/* (1)上と下の矩形の色を別々にするには？ */</span>
+
+ctx.rect(200, 100, 50, 50);  <span>// (1)</span>
+ctx.fill();                  <span>// サブパスを塗りつぶし</span>
+</pre>
+<p>(1)fill()を扱う上でのポイントはここだと思います。とりあえず上記のサンプルコードの結果を画像にすると、</p>
+<img src="/firstcanvas/img/fill01.png" />
+<p>こうなります。やりたいのは右の矩形は青にしたい。それを私が実現しようとして書いたコードは次の通りです。</p>
+<pre>
+ctx.beginPath();
+ctx.fillStyle = '#f00';
+ctx.rect(100, 100, 50, 50);
+ctx.fillStyle = '#00f';  <span> // 青色</span>
+ctx.rect(200, 100, 50, 50);
+ctx.fill();
+</pre>
+<p>結果を画像にすると、</p>
+<img src="/firstcanvas/img/fill02.png" />
+<p>真っ青になってしまいました。うーん失敗。fillStyleもそうですがこれ以外のcanvasのプロパティも同じく、そのときあるサブパス全てに影響が行き最後に指定された値を使います。では色を別々にするにはどうすればいいかというと、beginPath()を使います。というわけで、</p>
+<pre>
+ctx.beginPath();
+ctx.fillStyle = '#f00';
+ctx.rect(100, 100, 50, 50);
+ctx.fill();
+
+ctx.beginPath();
+ctx.fillStyle = '#00f'; <span> // 青色</span>
+ctx.rect(200, 100, 50, 50);
+ctx.fill();
+</pre>
+<p>上記の結果を画像にすると、</p>
+<img src="/firstcanvas/img/fill03.png" />
+<p>色を分けることができましたー。</p>
+</section>
+<section>
+<h2 id="clip">clip()</h2>
+<p>サブパスの領域に合わせて画像を表示させるコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)どういった手順でクリッピングするのか</li>
+<li>(2)クリッピングされる領域はどのようにして決定するのか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+<span>/* 準備 */</span>
+ctx.beginPath();                                  <span>// パスを初期化</span>                        
+ctx.fillStyle = '#000';                           <span>// 塗りつぶしの色を黒色に</span>
+ctx.rect(0, 0, 500, 375);                         <span>// 矩形のサブパス</span>
+ctx.fill();                                       <span>// サブパスを塗りつぶし</span>
+
+<span>/* クリッピング領域を作る */</span>
+ctx.beginPath();
+ctx.arc(280, 110, 90, 0, Math.PI*2, false);       <span>// 円のサブパス</span>
+ctx.arc(320, 200, 120, 0, Math.PI*2, false);      
+ctx.clip();                                       <span>// (4)</span> 
+
+<span>/* 表示させる画像 */</span>
+var img = new Image();
+img.src = 'clip01.jpg?' + new Date().getTime();
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+};
+</pre>
+<p>画像のonload処理については<a href="http://www.html5.jp/canvas/how6.html">http://www.html5.jp/canvas/how6.html</a>で確認してください。</p>
+<br />
+<p>(1)あらかじめクリッピングの領域を指定してからそこに画像を表示させる。(2)clip()を呼び出す直前までに生成されたサブパスの図形がクリッピング領域となる。</p>
+<p>サンプルでは、まずarc()でクリッピング領域のサブパスを生成しています。それからclip()を呼び出してクリッピングして、drawImage()で画像を表示させます。すると、クリッピング領域にだけ画像が表示されることになります。</p>
+<p>こんな感じで。</p>
+<img src="/firstcanvas/img/clip02.png" />
+<p>一度使ってみれば簡単なのですが少し難しい気がします。手順をまとめると、</p>
+<ol>
+<li>クリッピング領域となるサブパスを生成する</li>
+<li>生成したらclip()を呼び出してクリッピング</li>
+<li>表示させたい画像を描画</li>
+</ol>
+<p>画像が先ではなく「後から」描画させることに気をつけたら大丈夫ですね。</p>
+</section>
+<section>
+<h2 id="isPointInPath">isPointInPath(x, y)</h2>
+<p>その座標上にサブパスがあるかどうかのコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>引数をいじってみる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+
+ctx.beginPath();                   <span>// パスを初期化</span>
+ctx.rect(0, 0, 100, 100);          <span>// 矩形のサブパス</span>
+alert(ctx.isPointInPath(50, 50));  <span>// (1)</span>
+</pre>
+<p>(1)これがたとえば、alert(ctx.isPointInPath(100, 100));だったとすればtrueが返ってくるでしょうか。それともfalseでしょうか。結果を言えばtrueですね。今存在するサブパスの座標上かどうかってことがポイントかと思います。私はこれを自分で考えて一瞬迷ったりしました（笑）。そういうわけで、</p>
+<pre>
+ctx.beginPath();
+ctx.moveTo(50, 50);
+alert(ctx.isPointInPath(50, 50));
+</pre>
+<p>これもtrueが返ってきます。パスという概念が理解できていないと少し迷うかもしれませんね。もう1つ例題。</p>
+<pre>
+ctx.beginPath();
+ctx.moveTo(50, 50);
+
+ctx.beginPath();
+alert(ctx.isPointInPath(50, 50));
+</pre>
+<p>これはfalseが返ってきます。beginPath()でサブパスはリセットされているので、canvas上にはサブパスがないよーってことになってます。なのでfalseが返ってくるんですね。</p>
+<p>isPointInPath()は単純といえば単純ですが、<a href="http://www.revulo.com/blog/20091209.html">http://www.revulo.com/blog/20091209.html</a>でもあるようにブラウザによって動作が違うようです。</p>
+<p>Firefox3.6時点でもこの仕様のままです。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x : 現在在るサブパスの座標上かどうか調べるうちのx座標</li>
+<li>y : 現在在るサブパスか座標浄化どうか調べるうちのy座標</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="addColorStop">gradient.addColorStop(offset, color)</h2>
+<p>グラデーションに色を設定するサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>offsetの値をいじってみる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                     <span>// パスを初期化</span>
+
+<span>// 線形のCanvasGradientオブジェクトを生成</span>
+var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+
+gradient.addColorStop(0.0, '#f00');  <span>// 0の位置に赤色</span>
+gradient.addColorStop(0.5, '#0f0');  <span>// 0.5の位置に緑色</span>
+gradient.addColorStop(1.0, '#00f');  <span>// 1の位置に青色</span>
+ctx.fillStyle = gradient;            <span>// グラデーションをセット</span>
+ctx.fillRect(0, 0, 200, 200);        <span>// あらかじめ塗りつぶされた矩形を描画</span>
+</pre>
+<p>どのようなグラデーションになるのかまず画像で確認してみます。</p>
+<img src="/firstcanvas/img/addcolorstop01.png" />
+<p>上から順に赤、緑、青とグラデーションされています。なんとなく見た感じだと赤が狭くて青が広いように見えますが、これらは等間隔で配置されています。緑を見ると、丁度ボックスの中央が一番濃いですよね。それもそのはずで、サンプルではgradient.addColorStop(0.5, '#0f0');と中心になるよう指定しているからです。</p>
+<p>addColorStop()はこのようにグラデーションの「どこ」に「どの色」を配置するかを決定するCanvasGradientオブジェクトのメソッドです。</p>
+<p>位置を決定するのが引数のうちoffsetで、色がcolorですね。色はともかくoffsetが難しいのではないでしょうか。もしかしたら私だけかもしれませんが（汗）、一応解説しておくとこの引数は0.0～1.0の値を指定し相対的に位置を決定するものです。</p>
+<p>言葉で説明すると難しいのでコードと画像を見てみましょう。上記のサンプルを少しいじります。</p>
+<pre>
+var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+
+gradient.addColorStop(0.0, '#f00');
+gradient.addColorStop(0.2, '#0f0');  <span>// 0.2の位置に緑色</span>
+gradient.addColorStop(1.0, '#00f');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 200);
+</pre>
+<p>最初のサンプルのうちgradient.addColorStop(0.5, '#0f0')をgradient.addColorStop(0.2, '#0f0')に変えました。この場合どうなるかというと、</p>
+<img src="/firstcanvas/img/addcolorstop02.png" />
+<p>緑色の幅が広くなりました。緑のoffsetを0.5から0.2と中心から上にずらしたからです。位置を表すのがoffsetなんだなって印象は持てたと思いますが、でもなんで0.0～1.0の値なのでしょうか。これはグラデーションの範囲を0.0から1.0に表した相対位置で指定するためなんですね。</p>
+<p>グラデーションの形状と範囲と向きはcreateLinearGradient()やcreateRadialGradient()というメソッドで決めています。</p>
+<p>サンプルの場合createLinearGradient(0, 0, 0, 200)となっています。これはどういう意味かというと、「線形グラデーションを200の長さで垂直に表現しますよ」としているんですね。</p>
+<p>要はこの長さ200を0.0～1.0と置き換えて位置を指定するのです。上記の少しいじったコードサンプルに分かりやすくコメントを付け足すと、</p>
+<pre>
+<span>// 線形グラデーションを200の長さで垂直に表すCanvasGradientオブジェクトを取得</span>
+var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+
+gradient.addColorStop(0.0, '#f00');  <span>// 長さが200のうち0の位置で赤色</span>
+gradient.addColorStop(0.2, '#0f0');  <span>// 長さが200のうち40の位置で緑色</span>
+gradient.addColorStop(1.0, '#00f');  <span>// 長さが200のうち200の位置で青色</span>
+ctx.fillStyle = gradient;
+ctx.fillRect(0,0, 200,200);  
+</pre>
+<p>こういうことですね。グラデーションの範囲の長さである200のうち0.0は0の位置ですし、0.2だったら40の位置、1.0だったら200の位置です。</p>
+<p>最初のサンプルのうち、addColorStopの緑色のoffsetは0.5でしたが、これだと200の長さのうち100の位置ということです。中心に緑があるので分かりますね。</p>
+<p>とりあえず「offsetが0だと一番端で0.5だと中心で1.0がもう一方の端」ということだけ頭に入れておけば、触っているうちにコツはつかめてくると思います。私も直感的にやると間違えることがあるのであまり偉そうなことはいえませんが（汗）。少し触れば理解できると思いますよ。</p>
+<p>また、グラデーションの方法と範囲と向きを決定するcreateLinearGradient()やcreateRadialGradient()については後述してありますので、そちらも一応読んでみてください。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>offset : 0.0～1.0で表した色を配置する位置</li>
+<li>color : offsetの位置に配置する色</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="createLinearGradient">createLinearGradient(x0, y0, x1, y1)</h2>
+<p>線形グラデーションのサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>引数をいじってみる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                     <span>// パスを初期化</span>
+
+<span>// 線形のCanvasGradientオブジェクトを生成</span>
+var gradient = ctx.createLinearGradient(0, 0, 0, 200);
+
+gradient.addColorStop(0.0, '#f00');  <span>// 0の位置に赤色</span>
+gradient.addColorStop(0.5, '#0f0');  <span>// 0.5の位置に緑色</span>
+gradient.addColorStop(1.0, '#00f');  <span>// 1の位置に青色</span>
+ctx.fillStyle = gradient;            <span>// グラデーションをセット</span>
+ctx.fillRect(0, 0, 200, 200);        <span>// 矩形を描画</span>
+</pre>
+<p>まず画像で確認。</p>
+<img src="/firstcanvas/img/addcolorstop01.png" />
+<p>createLinearGradient()はこのように直線的なグラデーションを表すためのメソッドです。</p>
+<p>createLinearGradient()が行っていることは、グラデーションの形状と範囲と方向を定めることです。形状とは線形のことで、範囲と方向とは上記のサンプルでいえば座標(0, 0)の始点から、座標(0, 200)の終点までのことです。つまり、あくまでイメージですが、</p>
+<img src="/firstcanvas/img/createLinearGradient01.png" />
+<p>このような長さの線分ができたと思ってください。あとはこれに色を配置して平行にみっちり並べるとサンプルの画像みたいになります。ただし、それらはcreateLinearGradient()とは別のaddColorStop()というメソッドによって行われていますので区別しておきたいところです。</p>
+<p>線分の画像はあくまでイメージなので実際は目に見えない線分ですが、これを定めたCanvasGradientオブジェクトを生成するのがcreateLinearGradient()の役割ということです。</p>
+<p>上記の例は垂線ですが、例えば、</p>
+<pre>
+var gradient = ctx.createLinearGradient(0, 0, 200, 200);
+</pre>
+<p>とすると、</p>
+<img src="/firstcanvas/img/createLinearGradient02.png" />
+<p>このように斜めになります。これを最初のコードサンプルにあてはめてみます。まずコード。</p>
+<pre>
+<span>// 傾くように定めたグラデーションのオブジェクトを生成</span>
+var gradient = ctx.createLinearGradient(0, 0, 200, 200);
+
+<span>// 傾くように定めたグラデーションに色付け</span>
+gradient.addColorStop(0.0, '#f00');
+gradient.addColorStop(0.5, '#0f0');
+gradient.addColorStop(1.0, '#00f');
+
+<span>// 色を塗りつぶしのプロパティにセットして矩形を描画</span>
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 200);
+</pre>
+<p>画像でも確認してみます。</p>
+<img src="/firstcanvas/img/createLinearGradient03.png" />
+<p>グラデーションも傾きました。</p>
+<p>また、createLinearGradient()はこのように傾きというかグラデーションの方向を定めることと同時に範囲も定まります。つまり、始点と終点を結んだ線分の長さ以上はグラデーションになりません。これはコードと画像で確認した方が早いので載せます。</p>
+<p>比較がしやすいよう、すぐ上の傾いたグラデーションのサンプルをいじります。まずコード。</p>
+<pre>
+<span>// 引数が200から100になっていることに注目</span>
+var gradient = ctx.createLinearGradient(0, 0, 100, 100);
+
+gradient.addColorStop(0.0, '#f00');
+gradient.addColorStop(0.5, '#0f0');
+gradient.addColorStop(1.0, '#00f');
+
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 200);
+</pre>
+<p>これが実際どうなるかというと、</p>
+<img src="/firstcanvas/img/createLinearGradient04.png" />
+<p>短くなっていますね。createLinearGradient()はこのように始点と終点の線分の長さでしかグラデーションは行われません。</p>
+<p>それから、addColorStop()はグラデーションの色を配置するCanvasGradientオブジェクトのメソッドです。CanvasGradientオブジェクトはここのサンプルでいうvar gradientにセットされているオブジェクトのことですね。</p>
+<p>グラデーションを表現するにはまずこのオブジェクトを生成してからaddColorStop()で色を配置し、fillStyleプロパティにオブジェクトを代入するという流れになります。addColorStop()について詳しくは上述されているので、もしよければご覧になってみてください。</p>
+<p>他に円形グラデーションを表すcreateRadialGradient()も存在するので合わせて確認してみてください。似たようなものなので、同じようにイメージすると良いと思います。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x0 : グラデーションの始点となるx座標</li>
+<li>y0 : グラデーションの始点となるy座標</li>
+<li>x1 : グラデーションの終点となるx座標</li>
+<li>y1 : グラデーションの終点となるy座標</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="createRadialGradient">createRadialGradient(x0, y0, r0, x1, y1, r1)</h2>
+<p>円形グラデーションのコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>引数をいじってみる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                        <span>// パスを初期化</span>
+
+<span>// 円形のCanvasGradientオブジェクトを生成</span>
+var gradient = ctx.createRadialGradient(100, 100, 25, 100, 100, 85);
+
+gradient.addColorStop(0.0, '#f00');  <span>// 0の位置に赤色</span>
+gradient.addColorStop(0.5, '#0f0');  <span>// 0.5の位置に緑色</span>
+gradient.addColorStop(1.0, '#00f');  <span>// 1の位置に青色</span>
+ctx.fillStyle = gradient;            <span>// グラデーションをセット</span>
+ctx.fillRect(0, 0, 200, 200);        <span>// 矩形を描画</span>
+</pre>
+<p>画像で確認してみます。</p>
+<img src="/firstcanvas/img/createRadialGradient01.png" />
+<p>createRadialGradient()はこのように円形のグラデーションを表すためのメソッドです。</p>
+<p>createRadialGradient()が行っていることは、グラデーションの形状と範囲を定めることです。形状とは円形のことで、範囲とは上記サンプルのコードで言う座標(100, 100)が中心となる半径25の開始円と、座標(100, 100)が中心となる半径85の終了円のことです。これのイメージとしては、</p>
+<img src="/firstcanvas/img/createRadialGradient02.png" />
+<p>こうですね。小さい円が開始円で大きい円が終了円になります。このように形状と範囲を定めたCanvasGradientオブジェクトを生成するのがcreateRadialGradient()の役割です。</p>
+<p>グラデーションは開始円の円周から終了円に向かってかかりますが、色やその配置についてはaddStopColor()で行います。</p>
+<p>それから開始円の内側はaddColorStop()のoffsetのうち一番小さい値の色が配置され、終了円の外側は一番大きい値の色が配置されます。最初のサンプルの画像でも開始円より内側はgradient.addColorStop(0.0, '#f00');と赤色で、終了円より外側はgradient.addColorStop(1.0, '#00f')で指定した色の通り青色ですね。</p>
+<p>慣れていないとグラデーションのかかり方がイメージと合わないかもしれませんがしばらくいじってみてください。</p>
+<p>また、それぞれ円の中心はずらすことができるので立体的な球体も表現できます。</p>
+<pre>
+<span>// 終了円をずらした</span>   
+var gradient = ctx.createRadialGradient(100, 100, 25, 50, 50, 85);
+
+gradient.addColorStop(0.0, '#f00');
+gradient.addColorStop(0.5, '#0f0');
+gradient.addColorStop(1.0, '#00f');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 200);
+</pre>
+<p>画像でみると、</p>
+<img src="/firstcanvas/img/createRadialGradient03.png" />
+<p>とまあずらしすぎるとおかしなことになります。なので少し調節すると、</p>
+<pre>
+var gradient = ctx.createRadialGradient(100, 100, 25, 60, 60, 85);
+</pre>
+<img src="/firstcanvas/img/createRadialGradient04.png" />
+<p>このようになります。ここから周りの色を白っぽくすれば、あっというまに、<br /><br /></p>
+<img src="/firstcanvas/img/createRadialGradient05.png" />
+<p>のできあがり♪</p>
+<p>・・・えーと、文字とか体はペイントソフトです。まーこういうグラデーションができるよってことのサンプルにしといてください。</p>
+<pre>
+var gradient = ctx.createRadialGradient(100, 100, 25, 85, 85, 85);
+
+gradient.addColorStop(0.0, '#000');
+gradient.addColorStop(0.1, '#f30');
+gradient.addColorStop(0.4, '#fea');
+gradient.addColorStop(0.5, '#fff');
+gradient.addColorStop(0.6, '#fff');
+gradient.addColorStop(0.7, '#fff');
+gradient.addColorStop(0.8, '#999');
+gradient.addColorStop(0.9, '#bbb');
+gradient.addColorStop(1.0, '#fff');
+
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 200);
+</pre>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x0 : グラデーションの開始円の中心となるx座標</li>
+<li>y0 : グラデーションの開始円の中心となるy座標</li>
+<li>r0 : 開始円の半径</li>
+<li>x1 : グラデーションの終了円の中心となるx座標</li>
+<li>y1 : グラデーションの終了円の中心となるy座標</li>
+<li>r1 : 終了円の半径</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="createPattern">createPattern(image, repetition)</h2>
+<p>指定の画像を繰り返して塗りつぶすコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)createPatternのrepetitionをいじる</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                                   <span>// パスを初期化</span>     
+
+<span>// 表示させる画像</span>
+var img = new Image();                             <span>// イメージオブジェクト生成</span>
+img.src = "pattern.png?" + new Date().getTime();
+img.onload = function() {
+  var pattern = ctx.createPattern(img, "repeat");  <span>// (1)</span>
+  ctx.fillStyle = pattern;                         <span>// 塗りつぶしにパターンをセット</span>
+  ctx.fillRect(0, 0, 200, 200);                    <span>// 塗りつぶされた矩形を描画</span>
+};
+</pre>
+<p>画像のonload処理については<a href="http://www.html5.jp/canvas/how6.html">http://www.html5.jp/canvas/how6.html</a>で確認してください。</p>
+<br />
+<p>(1)については<a href="http://www.html5.jp/canvas/ref/method/createPattern.html">http://www.html5.jp/canvas/ref/method/createPattern.html</a>の一番下を参考にどうぞ。 </p>
+<p>詳しい話は既存の資料は有効活用させてもらいここではイメージだけつかみましょう。このメソッドは簡単に言うとcssのbackground-repeatみたいなものです。横にずらーっと並べたり、縦にずらーっと並べたり、縦横ずらーっと並べたりできます。そうしてfill()など呼び出したときその設定したパターンで塗りつぶしが行われるわけです。サンプルではfillRect()を使っていますがこれにももちろん適用されます。</p>
+<p>このコードではfillStyleにpatternをセットしていますがこれはstrokeStyleにもセットすることができます。あまり利用するシーンが無いように感じるのでFirstCanvasでもfillStyleのみ強制的にセットするようにしましたが、storkeStyleもできるということは理解しておいた方が良いでしょう。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>image : 繰り返しに使う画像名の文字列又はURL</li>
+<li>repetition : 繰り返しのタイプ("repeat", "repeat-x", "repeat-y", "no-repeat")</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="save">save(), restore()</h2>
+<p>描画状態を保存し、復元するコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)save()で何が保存できるのかを確認</li>
+<li>(2)どのような構造で描画状態が保存されているのか</li>
+<li>(3)restore()を呼び出したときどの描画状態が復元されるのか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                 <span>// パスを初期化</span>
+ctx.fillStyle = '#000;           <span>// 塗りつぶしの色を黒色に</span>
+  
+ctx.save();                      <span>// 描画状態を保存</span>
+ctx.fillStyle = '#f00';          <span>// 塗りつぶしの色を赤色に</span>
+ctx.save();
+ctx.fillStyle = '#00f';          <span>// 塗りつぶしの色を青色に</span>
+
+ctx.restore();                   <span>// 描画状態を復元</span>
+ctx.fillRect(0, 0, 100, 100);    <span>// あらかじめ塗りつぶされた矩形を描画（黒色）</span>
+ctx.restore();
+ctx.fillRect(100, 0, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画(赤色)</span>
+</pre>
+<p>(1)save()は描画状態を保存します。描画状態とは具体的に何を指すかと言うと、</p>
+<ul>
+<li><strong>clip()</strong>のクリッピング領域</li>
+<li><strong>scale(), rotate(), translate(), transform(), setTransform()</strong>の変換マトリックス</li>
+<li><strong>strokeStyle, fillStyle, globalAlpha, lineWidth, lineCap, lineJoin, miterLimit, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor, globalCompositeOperation, font, textAlign, textBaseline</strong>のcanvasのプロパティ全部</li>
+</ul>
+<p>の情報です。細かいことは無視して<strong>クリッピングの領域</strong>と<strong>変換マトリックス</strong>と<strong>canvasのプロパティ全部</strong>と覚えると簡単。</p>
+<p>このように<strong>canvasに描画されている図形や線などの内容が保存される</strong>わけではないので注意してください。描画した内容は保存されず上記の項目が保存されることになります。もし仮に描画内容を保存したいのであればgetImageData()を使うのが一般的でしょう。</p>
+<br />
+<p>(2)save()での描画状態の保存構造についてですが、save()は呼び出す度に現在の描画状態をスタック(描画状態を保存しておく箱みたいなの)の最後に追加します。ここがイメージしにくいかもしれませんが、分かりやすくすると、</p>
+<img src="/firstcanvas/img/save01.png" />
+<p>こうやって新しい描画状態を一番上になるように保存していくイメージです。このように今までの描画状態が上書きされることはありません。保存した描画状態を復元する場合はrestore()を使い、一番上の新しい描画状態から復元していきます。</p>
+<br />
+<p>(3)つまりスタックの最後の描画状態から順に復元されるということですね。</p>
+<img src="/firstcanvas/img/save02.png" />
+<p>restore()を呼び出して4回目の描画状態を復元したあと、またさらにrestore()を呼び出すと3回目の描画状態を復元します。</p>
+<img src="/firstcanvas/img/save03.png" />
+<p>こんな感じでrestore()を呼び出す度にスタックのケツからぶっこぬいて復元します。もしスタックが空の状態でrestore()を呼び出しても何もおきません。</p>
+<p>そういうわけで、save()とrestore()の役割をまとめると、</p>
+<img src="/firstcanvas/img/save04.png" />
+<p>こういう具合。少し難しいかもしれませんが試行錯誤して慣れていきましょう。結構重宝するメソッドだと思います。</p>
+</section>
+<section>
+<h2 id="scale">scale(x, y)</h2>
+<p>図形を伸縮させるコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>何が伸縮しているのか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();               <span>// パスを初期化</span>
+
+ctx.fillRect(0, 0, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+ctx.scale(2, 2);               <span>// 縦横を2倍に拡大</span>
+ctx.fillStyle = "#f00";        <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(50, 50, 50, 50);
+</pre>
+<p>サンプルの結果がどうなるかを画像で確認。</p>
+<img src="/firstcanvas/img/scale01.png" />
+<p>ctx.fillRect(50, 50, 50, 50);が赤色の矩形を描画していることになるのですが、なんか変な感じですよね。これはscale(2, 2);と呼び出して縦横を2倍にしているからこのようになっているのですが。いまいちピンとこないのでscale()を呼び出さなかったときの画像も確認してみます。</p>
+<pre>
+var ctx = canvas.getContent('2d');
+ctx.beginPath();
+
+ctx.fillRect(0, 0, 100, 100);
+ctx.fillStyle = "#f00";
+ctx.fillRect(50, 50, 50, 50);
+</pre>
+<img src="/firstcanvas/img/scale02.png" />
+<p>小さくなりました。scale()を使ったときと使わないときとで何がどう違うのかを分かりやすくまとめると、</p>
+<img src="/firstcanvas/img/scale03.png" />
+<p>ということですね。私の感覚だと「図形そのもの」が伸縮するというイメージなので、大きさが2倍になることはわかっても座標位置まで2倍になるとは思いませんでした。</p>
+<p>座標と大きざが2倍になっているということは、これはcanvasが（厳密には変換マトリックスが）伸縮変形しているということのようです。初めのうちは違和感を覚えましたがこれが当たり前なのでしょう。</p>
+<p>あとscale()は呼び出される以前の描画内容について影響をしません。呼び出された後の描画内容に対して影響を及ぼします。</p>
+<p>引数については倍数で指定してください。2倍であれば2とし、0.5倍であれば0.5と指定することで縦と横それぞれ伸縮されます。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x : x軸方向への伸縮の倍率</li>
+<li>y : y軸方向への伸縮の倍率</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="rotate">rotate(angle)</h2>
+<p>図形を回転変形させるコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>何が回転しているのか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                   <span>// パスを初期化</span>
+
+ctx.fillRect(100, 100, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+
+ctx.rotate(0.17453292519943295);   <span>// 10度回転</span>
+ctx.fillStyle = "#f00";            <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(100, 100, 100, 100);
+
+ctx.rotate(0.17453292519943295);   <span>// 10度回転</span>
+ctx.fillStyle = "#00f";            <span>// 塗りつぶしの色を青色に</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>サンプルの結果を画像で確認。</p>
+<img src="/firstcanvas/img/rotate01.png" />
+<p>赤色と青色の矩形は黒色の矩形と同じ場所、同じ大きさで描画していますが、rotate()によって10度ずつ回転しているのでそれぞれずれていることが分かります。</p>
+<p>それで、結局何が回転変形しているかといえば図形というよりもcanvasが（厳密には変換マトリックスが）回転変形しているみたいです。もし図形だけということなら座標の位置までずれることは無いでしょうし。</p>
+<p>ただし、rotate()は呼び出される以前の描画内容について影響をしません。呼び出された後の描画内容に対して影響を及ぼします。</p>
+<p>それから引数についてですが、angleの値は時計回りの回転角度をラジアンという単位に変換したものを使います。回転角度をラジアンに変換する計算式は「radian = 角度 * Math.PI / 180」で、Math.PIはJavaScriptのMathオブジェクトのうち円周率を返すプロパティです。</p>
+<p>分かりやすくすると「radian = 角度 * 3.141592.... / 180」と言う感じですね。FirstCanvasでは自動で計算結果が出るようになっています。</p>
+<p>実際に使うときは、</p>
+<pre>
+ctx.rotate(10 * Math.PI / 180);     <span>// 10度回転</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<P>とすれば良いと思います。サンプルのようにわざわざ少数に直した値を入れる必要はありません。コードはFirstCanvasでで作ったものなので変換されちゃうんですねー。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>angle : 時計回りの回転角度(ラジアン)</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="translate">translate(x, y)</h2>
+<p>図形を移動変形させるコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>移動するとはどういうことか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();               <span>// パスを初期化</span>
+                               
+ctx.fillRect(0, 0, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+ctx.translate(100, 50);        <span>// 座標(0, 0)を座標(100, 50)の地点まで移動</span>
+ctx.fillStyle = "#f00";        <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(0, 0, 100, 100);
+</pre>
+<p>サンプルを画像で確認。</p>
+<img src="/firstcanvas/img/translate01.png" />
+<p>最後の矩形はctx.fillRect(0, 0, 100, 100);としていますが、描画位置が移動していますね。translate(100, 50)として基準線を変えたからです。</p>
+<img src="/firstcanvas/img/translate02.png" />
+<p>これ以降は座標(100, 50)の位置が座標(0, 0)の位置となります。図形そのものが移動するというよりはcanvasの基準となる地点（座標(0, 0)の地点）が移動しているようです。このメソッドはマトリックスを操作するメソッドのうち分かりやすいメソッドですねー。</p>
+<p>ただし、translate()は呼び出される以前の描画内容について影響をしません。呼び出された後の描画内容に対して影響を及ぼします。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>x : x軸方向の基準線を移動させる距離</li>
+<li>y : y軸方向の基準線を移動させる距離</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="transform">transform(m11, m12, m21, m22, dx, dy)</h2>
+<p>変形マトリックスを適用させるコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)transform()とsetTransform()の違い</li>
+<li>(2)transform()の引数はそれぞれどういった機能があるのか確認</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();             <span>// パスを初期化</span>
+
+<span>/*scale()と同じ変換マトリックス */</span>
+ctx.transform(2, 0, 0, 2, 0, 0);
+ctx.fillRect(0, 0, 50, 50);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+
+<span>/* rotate()と同じ変換マトリックス */</span>
+var q = 10 * Math.PI / 180;
+ctx.setTransform(Math.cos(q), Math.sin(q), -Math.sin(q), Math.cos(q), 0, 0);
+ctx.fillRect(200, 0, 50, 50);
+
+<span>/* translate()と同じ変換マトリックス */</span>
+ctx.setTransform(1, 0, 0, 1, 400, 200);
+ctx.fillRect(0, 0, 50, 50);
+
+<span>/* 変形 */</span>
+ctx.setTransform(1, 0.5, 0.5, 1, 0, 0);
+ctx.fillRect(100, 100, 50, 50);
+</pre>
+<p>(1)transform()の項目ですがサンプルでは主にsetTransform()を利用しています。</p>
+<p>この2つのメソッドの違いは変換マトリックスを初期化するかどうかの違いで、transform()は今までで変換されているマトリックスを継続して利用します。setTransform()は今までの変換マトリックスを初期化して引数通りの新しい変換マトリックスを適用することになります。</p>
+<p>ということでサンプルでは、継続して利用すると面倒なので途中からsetTransform()を使ってます。</p>
+<p>使い分けの基準は、今までの変換マトリックスをリセットせずに変換マトリックスを適用するならtransform()を使い、リセットして最初の状態から変換マトリックスを適用するのならsetTransform()を使うといったところでしょうか。</p>
+<p>それから変換マトリックスについてですが、難しく言えば変換行列というものだそうです。さっぱりわからんので私は「図形の伸縮、移動、回転などをできるようにするもの」とそのまま覚えてます。たぶん3Dな表現はこれで楽にできるんじゃないかな。こんな半端な理解で満足できなければ検索してみてください。</p>
+<br />
+<p>(2)次に引数について。おそらく数学的な分野に首を突っ込むことになりそうな感じがしますが、難しくて分かりません。そういった深い話は後で理解するとして、ここでは実際の実行結果を見て表面的なコツをつかむことを優先します。</p>
+<P>これ以降は<a href="/firstcanvas/sample.html#scale">scale()</a>、<a href="/firstcanvas/sample.html#rotate">rotate()</a>、<a href="/firstcanvas/sample.html#translate">translate()</a>を理解していると分かりやすいと思います。そららのメソッドをまだ使ったことがなければ試してみてください。</p>
+<section>
+<h3>1.scale(x, y)のような使い方</h3>
+<p><a href="/firstcanvas/sample.html#scale">scale()</a>とは伸縮変形を行うメソッドです。機能はtransform()でも同じことができます。</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);     <span>// あらかじめ塗りつぶされた矩形を描画</span>
+ctx.transform(2, 0, 0, 2, 0, 0);  <span>// 縦横を2倍に拡大</span>
+ctx.fillStyle = "#f00";           <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(50, 50, 50, 50);
+</pre>
+<p>画像で確認してみると、</p>
+<img src="/firstcanvas/img/scale01.png" />
+<p>となります。この結果は<a href="/firstcanvas/sample.html#scale">scale()のサンプル</a>と同じで矩形を2倍に拡大しています。同じ結果になるscale()のコードは、</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);
+ctx.scale(2, 2);  <span>// 違いはここがscale()なだけ</span>
+ctx.fillStyle = "#f00";
+ctx.fillRect(50, 50, 50, 50);
+</pre>
+<p>こうです。ごちゃごちゃ書いてますが、違いはtransform()かscale()かってだけ。</p>
+<p>ここで引数に注目してみると、ctx.transform(2, 0, 0, 2, 0, 0);とctx.scale(2, 2);となっています。これで結果が同じということは、transform(m11, m12, m21, m22, dx, dy)のうちm11とm22は図形や線などの伸縮を指定する引数だ、ということが分かりますね。</p>
+<p>例えば縦が0.5倍にして、横を3倍にした図形を描画したいのであれば、transform(3, 0, 0, 0.5, 0, 0)とします。scale()のxとyは、、transform(m11, m12, m21, m22, dx, dy)でいうm11とm22にあたるということですねー。</p>
+</section>
+<section>
+<h3>rotate(angle)のような使い方</h3>
+<p><a href="/firstcanvas/sample.html#rotate">rotate()</a>は回転変形を行うメソッドです。この機能もtransform()で同じことができます。</p>
+<pre>
+var q = 10 * Math.PI / 180;           <span>// 10度にあたる回転角度を計算した結果</span>
+ctx.fillRect(100, 100, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+
+ctx.transform(Math.cos(q), Math.sin(q), -Math.sin(q), Math.cos(q), 0, 0);  <span>// 10度回転</span>
+ctx.fillStyle = "#f00";            <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(100, 100, 100, 100);
+
+ctx.transform(Math.cos(q), Math.sin(q), -Math.sin(q), Math.cos(q), 0, 0);  <span>// 10度回転</span>
+ctx.fillStyle = "#00f";            <span>// 塗りつぶしの色を青色に</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>画像で確認してみると、</p>
+<img src="/firstcanvas/img/rotate01.png" />
+<p>となります。この結果は<a href="/firstcanvas/sample.html#rotate">rotate()のサンプル</a>と同じです。同じ結果になるrotate()のコードは、</p>
+<pre>
+ctx.fillRect(100, 100, 100, 100);
+
+ctx.rotate(0.17453292519943295);  <span>// 違いはここがrotate()なだけ</span>
+ctx.fillStyle = "#f00";
+ctx.fillRect(100, 100, 100, 100);
+
+ctx.rotate(0.17453292519943295);  <span>// 違いはここがrotate()なだけ</span>
+ctx.fillStyle = "#00f";
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>こうです。違いはtransform()かtranslate()かってだけ。</p>
+<p>とはいえ初見だと何をやっているのかさっぱりかもしれません。初見でない私もよくわかりません（汗）。数学的なことは難しいので省きます。どうしても知りたいというのなら、</p>
+<p><a href="http://www.adobe.com/jp/devnet/flash/articles/matrix_class.html" target="blank">http://www.adobe.com/jp/devnet/flash/articles/matrix_class.html</a></p>
+<p>が参考になると思います。flashの記事ですが同じ内容です。まー細かい部分はあれですが、分かりやすいですね。あとadobeがんばって！Canvasな内容でごめんね！appleのsafariが発案したcanvasな内容でごめんね！2010年はかなりいじめられて辛そうだけどがんばって！DWつかってるよ！これemacsで書いてるけど＞＜</p>
+</section>
+<section>
+<h3>translate(x, y)のような使い方</h3>
+<p><a href="/firstcanvas/sample.html#translate">translate()</a>とは移動変形を行うメソッドです。これもtransform()で同じことができます。</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);        <span>// あらかじめ塗りつぶされた矩形を描画</span>
+ctx.transform(1, 0, 0, 1, 100, 50);  <span>// 座標(0, 0)を座標(100, 50)の地点まで移動</span>
+ctx.fillStyle = "#f00";              <span>// 塗りつぶしの色を赤色に</span>
+ctx.fillRect(0, 0, 100, 100);
+</pre>
+<p>画像で確認してみると、</p>
+<img src="/firstcanvas/img/translate01.png" />
+<p>となります。この結果は<a href="/firstcanvas/sample.html#translate">translate()のサンプル</a>と同じでx軸方向に100、y軸方向に50移動しています。同じ結果になるtranslate()のコードは、</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);
+ctx.translate(100, 50);  <span>// 違いはここがtranslate()なだけ</span>
+ctx.fillStyle = "#f00";
+ctx.fillRect(0, 0, 100, 100);
+</pre>
+<p>こうです。違いはtransform()かtranslate()かってだけ。</p>
+<p>引数見てみると、ctx.transform(1, 0, 0, 1, 100, 50);とctx.translate(100, 50);となってます。100と50のとこが一緒ですね。これで結果が同じなのですから、transform(m11, m12, m21, m22, dx, dy)のうちdxとdyは図形や線などの平行移動をすることができる引数だ、ということが分かりました。</p>
+<p>例えばx軸方向に300移動して、y軸方向に100移動させたいのであれば、transform(1, 0, 0, 1, 300, 100)とします。translate(x, y)のxとyは、transform(m11, m12, m21, m22, dx, dy)でいうdxとdyにあたるということですね。</p>
+<p>ちなみに上述しているscale(x, y)にあたるm11とm22は1と指定していますがこれは1倍ってこと。0にしちゃうと0倍で何も描画されなくなっちゃうので注意です。感覚的には拡大も縮小もしないから0って思いそうですが。というか私はそうやって失敗してました（汗</p>
+<h3>傾斜変形の使い方</h3>
+<p>transform()では傾斜変形をすることもできます。これはscale()、rotate()、translate()では表現できない変形ですね。（若干rotate()が関わってはいるのですが）</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);       <span>// あらかじめ塗りつぶされた矩形を描画</span>
+ctx.fillStyle = "#f00";             <span>// 塗りつぶしの色を赤色に</span>
+ctx.transform(1, 0.1, 0, 1, 0, 0);  <span>// y軸方向へ0.1傾ける</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>画像で確認してみると、</p>
+<img src="/firstcanvas/img/transform01.png" />
+<p>となります。赤い矩形が垂直方向に傾いているのが確認できますね。transform(m11, m12, m21, m22, dx, dy)のうちm12に0.1とすればこうなります。今度はm21の引数でも同じ値で実行してみます。</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);
+ctx.fillStyle = "#f00";
+ctx.transform(1, 0, 0.1, 1, 0, 0);  <span>// x軸方向へ0.1傾ける</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>画像で確認してみると、</p>
+<img src="/firstcanvas/img/transform02.png" />
+<p>となりました。赤い矩形が今度は水平方向に傾いているのが確認できると思います。transform(m11, m12, m21, m22, dx, dy)のうちm21を0.1とすればこうなりました。</p>
+<p>じゃあ今度は両方傾けてみましょー。</p>
+<pre>
+ctx.fillRect(0, 0, 100, 100);
+ctx.fillStyle = "#f00";
+ctx.transform(1, 0.1, 0.1, 1, 0, 0);  <span>// x,y軸方向へ0.1傾ける</span>
+ctx.fillRect(100, 100, 100, 100);
+</pre>
+<p>画像で確認してみましょー。</p>
+<img src="/firstcanvas/img/transform03.png" />
+<p>なんかしぼんだ感じになったんですが分かるでしょうか。それぞれ違いが分かりやすいようこれまでの3つの画像をまとめると。</p>
+<img src="/firstcanvas/img/transform04.png" />
+<p>それぞれ傾き方が良く分かると思います。そういうわけでtransform(m11, m12, m21, m22, dx, dy)のうちm12とm21は、図形などをy軸又はx軸方向へ傾けることができる引数であることが分かりました。</p>
+<p>m12とm21にあてはめる数値は倍数です。2だと2倍で、0.1だと0.1倍傾斜させる、ということですね。</p>
+<p>ちなみにrotate()はこの傾きとscale()の伸縮の加減によって実現しています。上述してある「rotate()のような使い方」のサンプルで確認してみてください。</p>
+</section>
+<section>
+<h3>まとめ</h3>
+<p>かなり長くなりましたが、transform()は結局何ができるのかというと、scale()、rotate()、translate()をまとめて利用できるということですね。(厳密に言えば、transform()の機能を細分化したのがscale()やrotate()だと言えますが)</p>
+<p>たとえば、</p>
+<pre>
+ctx.translate(100, 100);       <span>// 座標(0, 0)を座標(100, 100)の地点まで移動</span>
+ctx.scale(2, 2);               <span>// 縦横を2倍に拡大</span>
+ctx.fillRect(0, 0, 100, 100);  <span>// あらかじめ塗りつぶされた矩形を描画</span>
+</pre>
+<p>このように変換マトリックスを適用することもできますが、これはtransform()でもできます。</p>
+<pre>
+ctx.transform(2, 0, 0, 2, 100, 100);
+ctx.fillRect(0, 0, 100, 100);
+</pre>
+<p>こうですね。さらにscale()、rotate()、translate()を使っても微妙に表現できない複雑なこともtransform()はできます。scale()とrotate()でかぶっている部分を自由に指定できるので。たぶんね。</p>
+<p>そういうわけで、かなり複雑なtransform()ですが細かくみればscale()、rotate()、translate()をまとめて利用できるようにしたもの、ということが分かったと思います。</p>
+<p>伸縮、平行移動、回転、傾斜などの操作が複雑にからむときはtransform()を使ってみましょう。</p>
+<p>ここまでの理解でやっと入門レベルだと思いますがやっぱり難しいですね。でもきちんと扱うのであれば理論も理解しておくと便利だと思いますので、ステップアップとして、</p>
+<p><a href="http://www.adobe.com/jp/devnet/flash/articles/matrix_class.html" target="blank">http://www.adobe.com/jp/devnet/flash/articles/matrix_class.html</a></p>
+<p>をご覧になってください。分かりやすく変換行列について解説してくれています。立体的なアニメーションが簡単にできそうだなあ。数学無知な私もかなり参考になりました。</p>
+</section>
+<section>
+<h3>引数</h3>
+<ol>
+<li>m11 : x軸方向への伸縮の倍率</li>
+<li>m12 : y軸方向への傾斜の倍率</li>
+<li>m21 : x軸方向への傾斜の倍率</li>
+<li>m22 : x軸方向への伸縮の倍率</li>
+<li>dx : x軸方向の基準線を移動させる距離</li>
+<li>dy : y軸方向の基準線を移動させる距離</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="createImageData">createImageData(sw, sh)</h2>
+<p>ImageDataオブジェクトを生成するコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>生成したImageDataオブジェクトの扱い方について</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                                     <span>// パスを初期化</span>
+
+var width = 100, height = 100;                       <span>// 幅と高さ</span>
+var imagedata = ctx.createImageData(width, height);  <span>// ImageDataオブジェクトを生成</span>
+
+<span>/* ImageDataオブジェクトに色をつける */</span>
+for(var y = 0; y < height; y++) {
+  for(var x = 0; x < width; x++) {
+    var index = (width * y + x) * 4;                 <span>// 座標に対する配列の位置を計算</span>
+    imagedata.data[index + 0] = y / height * 100;
+    imagedata.data[index + 1] = y / height * 100;
+    imagedata.data[index + 2] = y / height * 100;
+    imagedata.data[index + 3] = 255;               
+  }
+}
+
+ctx.putImageData(imagedata, 0, 0);                   <span>// canvasにImageDataオブジェクトを描画</span>
+</pre>
+<p>実行結果によってcanvasに描画された内容を確認。</p>
+<img src="/firstcanvas/img/createimagedata01.png" />
+<p>まずcreateImageData()を使って、引数で指定された大きさの黒で透明な矩形のImageDataオブジェクトを生成しています。色のついていない矩形ってことですね。これを生成します。createImageData()がしているのはそれだけ。上の画像は黒色で下にグラーデションがかかっていますが、それはサンプルのコードのうちfor文のとこで処理しています。</p>
+<p>そして色をつけたらputImageDataでcanvasに描画という流れ。putImageDataについては後述していますのでご覧になってみてください。</p>
+<p>このようにcreateImageData()の使い方は簡単ですが、生成されたImageDataオブジェクトに色をつけるという操作が難しいです。なのでImageDataオブジェクトとは何なのかもうちょっと詳しく調べてみますね。</p>
+</section>
+<section>
+<h3>ImageDataオブジェクト</h3>
+<p>ImageDataオブジェクトはcreateImageData()で生成したり、getImageData()によってcanvasの描画内容をコピーしたときにできる矩形の画像データです。</p>
+<p>どういうものかイメージできないのであれば画像そのものと思って良いと思います。canvas用に色の操作が簡単にできる画像がImageDataオブジェクトなんですね。</p>
+<p>そしてこのオブジェクトが保有するプロパティは3つ。</p>
+<ul>
+<li>width</li>
+<li>height</li>
+<li>data</li>
+</ul>
+<p>widthとheightは名前の通りで、そのImageDataオブジェクトの幅と高さを返します。だから例えば、</p>
+<pre>
+var imagedata = ctx.createImageData(100, 200);
+alert(imagedata.width);   <span>// 100</span>
+alert(imagedata.height);  <span>// 200</span>
+</pre>
+<p>とすれば、それぞれcreateImageData()で指定した幅と高さの100と200が表示されます。残りのdataプロパティは何を返すかというと<strong>ImageDataオブジェクトの色のデータ</strong>ですね。</p>
+<pre>
+var imagedata = ctx.createImageData(100, 200);
+console.log(imagedata.data);  <span>// [0, 0, 0, 0, 0, 0, 0, 0, ...]</span>
+<span>// console.logはそれぞれのブラウザのデベロッパーツールのコンソールで確認できる</span>
+</pre>
+<p>0がたくさん並んでいる配列を得ることができました。これがImageDataオブジェクトの色のデータなのですが要素が多すぎてよく分かりません。そこで最小単位の1ピクセルで確認してみます。</p>
+<pre>
+var imagedata = ctx.createImageData(1, 1);
+console.log(imagedata.data);  <span>// [0, 0, 0, 0]</span>
+</pre>
+<p>4つの0が並んだ配列が返ってきました。<strong>1ピクセルの色のデータはこの4つの値で構成されていることが分かります。</strong>このように4つの数値で色を表現する形式をRGBAといい、「R:red, G:green, B:blue, A:alpha」を意味しています。<p>
+<p>今回返ってきたdataプロパティの配列にある数値のうち、左から順に[赤色、緑色、青色、透明度]とあてはまり0～255の値をそれぞれ入力して様々な色を表現することができます。</p>
+<p>なのでImageDataオブジェクトの色を変えるときはdataプロパティにある配列の数値をいじります。たとえばこの1ピクセルのImageDataオブジェクトを赤色にしたかったら、</p>
+<pre>
+var imagedata = ctx.createImageData(1, 1);
+imagedata.data[0] = 255;
+imagedata.data[3] = 255;
+
+console.log(imagedata.data);  <span>// [255, 0, 0, 255]</span>
+</pre>
+<p>として、最初の赤色の数値と最後の透明度の数値を255にすることで一番濃い赤色にすることができます。もちろんこれをputImageData()でcanvasに貼り付ければ赤い矩形が描画されます。(1ピクセルなのでめちゃくちゃ小さい点になりますが)</p>
+<p>1ピクセルの色は4つの数値で表現できることは分かりました。じゃあこれ以上の大きさになると、dataプロパティの値はどうなるのでしょうか？ということで今度はcreateImageData(2, 2)のImageDataオブジェクトでdataプロパティを確認。</p>
+<pre>
+var imagedata = ctx.createImageData(2, 2);
+console.log(imagedata.data);         <span>// [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span>
+console.log(imagedata.data.length);  <span>// 16</span>
+</pre>
+<p>ImageDataオブジェクトは2×2なので4ピクセルの大きさとなり、1ピクセルの色データは4つの要素からなるので丁度0が16個ですね。</p>
+<p>このオブジェクトの色を簡単にいじってみます。</p>
+<pre>
+var imagedata = ctx.createImageData(2, 2);
+imagedata.data[5] = 255;
+imagedata.data[7] = 255;
+imagedata.data[8] = 255;
+imagedata.data[11] = 255;
+
+console.log(imagedata.data);  <span>// [0, 0, 0, 0, 0, 255, 0, 255, 255, 0, 0, 255, 0, 0, 0, 0]</span>
+</pre>
+<p>これをcanvasに描画した結果を貼り付けるとなると、やっぱり小さいので良く分かりません。そこで同じような画像で拡大した感じにしてみました。</p>
+<img src="/firstcanvas/img/createimagedata02.png" />
+<p>すぐ上のコードはcanvasではこのように描画されるはずです（黒い枠は実際無い）。ここからは分かることはピクセルと配列の色データの並び方の関係性ですね。</p>
+<p>imagedata.dataの色データの配列と画像を見比べればなんとなく分かると思いますが、</p>
+<img src="/firstcanvas/img/createimagedata03.png" />
+<p>左上から右下に向かって色データが順に配列に入っていることが分かります。これはcreateImageData(100, 100)でもcreateImageData(2000, 1000)でも同じです。ImageDataのdataプロパティはこのように左上のピクセルから右下のピクセルに向かって、色データが順番に配列にまとめられて返ってきます。</p>
+<p>最初はこのピクセルと色データの配列の関係が分からなくて混乱しますが、何度か試して訓練してみてください。</p>
+</section>
+<section>
+<h3>引数</h3>
+<ol>
+<li>sw : ImageDataオブジェクトの横幅</li>
+<li>sh : ImageDataオブジェクトの縦幅</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="putImageData">putImageData(imagedata, dx, dy [, dirtyX, dirtyY, dirtyWidth, dirtyHeight])</h2>
+<p>ImageDataオブジェクトをcanvasに描画するコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)canvasに描画できるのは何か</li>
+<li>(2)引数の違いによってどう機能するのか</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d'); <span>// canvasを行う準備</span>
+ctx.beginPath();                                     <span>// パスを初期化</span>
+
+<span>/* 画像を描画 */</span>
+var img = new Image();
+img.src = 'canvaslogo.png?' + new Date().getTime();  <span>// (1)</span>
+img.onload = function() {                            <span>// (2)</span>
+  ctx.drawImage(img, 0, 0);
+
+  var imagedata = ctx.getImageData(0, 0, 500, 300);  <span>// ImageDataオブジェクトとして取得</span>
+  ctx.clearRect(0, 0, 500, 300);                     <span>// 描画内容が分かりやすいようクリア</span>
+  ctx.putImageData(imagedata, 0, 0);                 <span>// ImageDataオブジェクトを描画</span>
+};
+</pre>
+<p>画像のonload処理については<a href="http://www.html5.jp/canvas/how6.html">http://www.html5.jp/canvas/how6.html</a>で確認してください。</p>
+<br />
+<p>(1)まずサンプルの結果を画像で確認。</p>
+<img src="/firstcanvas/img/putimagedata01.png" />
+<p>このようにサンプルの結果はFirstCanvasのロゴがまるまる描画されるだけ。drawImage()で描画し、それをImageDataオブジェクトとして取得した後にすぐcanvasをクリアして、putImageData()で貼り付けという流れです。</p>
+<p>もちろん無駄なことをしているサンプルではあるけれど、putImageData()の機能を確かめるためだけのものなので気にしなくて良いです。</p>
+<p>このようにputImageData()はcanvasにImageDataオブジェクトを(正確には色のデータを)描画することができます。ImageDataオブジェクトはcreateImageDataで生成したり、サンプルのようにcanvasからgetImageData()を使って取得する方法があります。</p>
+<p>ImageDataオブジェクトの詳細は<a href="#createImageData">createImageData()のImageDataオブジェクト</a>を参照してください。</p>
+<br />
+<p>(2)putImageData()には上記のサンプルのようにputImageData(imagedata, dx, dy);としてImageDataオブジェクトをそのまま描画する方法と、dirty矩形を指定して描画する方法があります
+。</p>
+<p>これも直接確認すれば分かりやすいと思います。</p>
+<pre>
+var img = new Image();
+img.src = 'canvaslogo.png?' + new Date().getTime();
+img.onload = function()
+  ctx.drawImage(img, 0, 0);
+            
+  var imagedata = ctx.getImageData(0, 0, 500, 300);
+  ctx.clearRect(0, 0, 500, 300);
+  ctx.putImageData(imagedata, 0, 0, 250, 0, 150, 150);
+}
+</pre>
+<p>画像で確認。</p>
+<img src="/firstcanvas/img/putimagedata02.png" />
+<p>このようにdirty矩形で指定した範囲だけ描画されます。が、ちょっと分かりづらいかな。見やすいように背景に黒を入れましょう。上のコードのうちclearRect()をfillRect()に変えて描画してみます。</p>
+<img src="/firstcanvas/img/putimagedata03.png" />
+<p>dirty矩形の部分だけ描画されていることが分かります。またdirty矩形以外の範囲は何も描画されませんので、以前描画した内容があるならばそれがそのまま残る状態です。上の画像もfillRect()で黒く塗っているのでそのまま残っていて黒いのですね。</p>
+<p>なお、dirty矩形の引数に対応していないブラウザではputImageData(imagedata, dx, dy);として普通に描画されますので、利用するときは確認しておきましょう。</p>
+<section>
+<h3>引数</h3>
+<ol>
+<li>imagedata : createImageData()で生成したりgetImageData()で取得したImageDataオブジェクト</li>
+<li>dx : imagedataを描画する左上頂点のx座標</li>
+<li>dy : imagedataを描画する左上頂点のy座標</li>
+<li>dirtyX : imagedataの一部分を描画する左上頂点のx座標</li>
+<li>dirtyY : imagedataの一部分を描画する左上頂点のy座標</li>
+<li>dirtyWidth : imagedataの一部分を伸縮させるときの横幅</li>
+<li>dirtyHeight: imagedataの一部分を伸縮させるときの縦幅</li>
+</ol>
+</section>
+</section>
+<section>
+<h2 id="drawImage">drawImage()</h2>
+<section>
+<h3>引数のタイプ</h3>
+<ul style="background:#cfcf77;list-style:none;padding: 0 10px;margin-left:10px;margin-right:10px;">
+<li>drawImage(image, dx, dy);</li>
+<li>drawImage(image, dx, dy, dw, dh);</li>
+<li>drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);</li>
+</ul>
+</section>
+<p>imageを描画するコードサンプル。</p>
+<section>
+<h3>機能確認</h3>
+<ol>
+<li>(1)どんな要素をcanvasに貼り付けることができるのか</li>
+<li>(2)3つの異なる引数のとり方でdrawImageの違いを確認</li>
+</ol>
+</section>
+<pre>
+var ctx = canvas.getContent('2d');  <span>// canvasを行う準備</span>
+ctx.beginPath();  <span>// パスを初期化</span>
+
+<span>/* 画像を描画 */</span>
+var img = new Image();
+img.src = "dimg01.jpg?" + new Date().getTime();
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);                                  <span>// 通常の大きさで画像を描画</span>
+  ctx.drawImage(img, 250, 0, 100, 100);                      <span>// 指定の大きさで画像を描画</span>
+  ctx.drawImage(img, 100, 100, 100, 100, 400, 0, 200, 200);  <span>// 画像の一部分を指定の大きさで描画</span>
+};
+</pre>
+<p>画像のonload処理については<a href="http://www.html5.jp/canvas/how6.html">http://www.html5.jp/canvas/how6.html</a>で確認してください。</p>
+<br />
+<p>サンプルを画像で確認。</p>
+<img src="/firstcanvas/img/drawimage01.png" />
+<p>(1)drawImage()はHTMLImageElement、HTMLCanvasElement、HTMLVideoElementをcanvasに貼り付けることができます。別の言い方をすればそれぞれimg要素の画像(&lt;img /&gt;)、canvas要素(&lt;canvas&gt;&lt;/canvas&gt;)、video要素(&lt;video&gt;&lt;/video&gt;)のことです。FirstCanvasでは今のところimg要素にしか対応していません。</p>
+<br />
+<p>(2)drawImage()には3つの引数指定の方法があります。全てにおいて共通な点はimage引数に当てた要素をcanvasに貼り付けることですが、その貼り付け方がそれぞれ異なりますので、個別に確認していきたいと思います。</p>
+<section>
+<h3>drawImage(image, dx, dy)</h3>
+<p>通常の大きさのままimage引数にあてられた要素をcanvasの座標(dx, dy)の地点に描画する引数のとり方です。これについては簡単にイメージできと思います。</p>
+</section>
+<section>
+<h3>drawImage(image, dx, dy, dw, dh)</h3>
+<p>image引数にあてられた要素をcanvasの座標(dx, dy)の地点に横幅dw、縦幅dhの値に伸縮させて描画する引数のとり方です。これはdrawImage(image, dx, dy)とで比較してみると分かりやすいでしょう。</p>
+<pre>
+var img = new Image();
+img.src = "dimg01.jpg?" + new Date().getTime();
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 250, 0, 100, 100);
+};
+</pre>
+<p>結果は、</p>
+<img src="/firstcanvas/img/drawimage02.png" />
+<p>左が通常のdrawImage(image, dx, dy)で右が伸縮させて描画したdrawImage(image, dx, dy, dw, wh)です。これも簡単ですね。</p>
+</section>
+<section>
+<h3>drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)</h3>
+<p>image引数にあてられた要素のうち、座標(sx, sy)の地点から横幅sw、縦幅shの大きさでコピーし、それをcanvasの座標(dx, dy)の地点に横幅dw、縦幅dhの値に伸縮させて描画する引数の取り方です。文章で読むと分かりづらいですね。ということでこれも画像で確認。</p>
+<pre>
+var img = new Image();
+img.src = "img/dimg01.jpg?" + new Date().getTime();
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 100, 0, 140, 200, 250, 0, 140, 200);
+};
+</pre>
+<p>結果は、</p>
+<img src="/firstcanvas/img/drawimage03.png" />
+<p>このようにimageのうち描画させたい部分だけ矩形として取得し、canvasに貼り付けることができます。画像のうち点線で囲まれた部分が(sx, sy, sw, sh)で指定した範囲で、それを(dx, dy, dw, dh)で描画したことになりますね。もちろんこれはctx.drawImage(img, 0, 0);で描画された画像からコピーしているわけではないので、間違えないようにしてください。</p>
+<p>上記のコードでは伸縮させないで描画しましたが、これはたとえば、</p>
+<img src="/firstcanvas/img/drawimage04.png" />
+<p>といったようにdw、dhの値で伸縮させて描画することもできます。このあたりは(sx, sy, sw, sh)と(dx, dy, dw, dh)で分けて考えると分かりやすいですね。引数が多いので少し面倒だなと感じるかもしれませんが、drawImage()はよく利用するメソッドなので理解しておきましょう。</p>
+<p>ちなみに先ほどのコードはこちら。</p>
+<pre>
+var img = new Image();
+img.src = "img/dimg01.jpg?" + new Date().getTime();
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+  ctx.drawImage(img, 100, 0, 140, 200, 250, 0, 300, 300);
+}
+</pre>
+</section>
+<p>この3つの違いを把握しておけば最低限の使い方は覚えられたと思います。ここに変換マトリックスやプロパティの影響を受けてイメージがどう描画されるのかは、FirstCanvasやご自身の手で書いて確かめてみてください。</p>
+<section>
+<h3>引数 drawImage(img, dx, dy)</h3>
+<ol>
+<li>image : canvasに描画させるimg要素、canvas要素、video要素</li>
+<li>dx : imageを描画する左上頂点のx座標</li>
+<li>dy : imageを描画する左上頂点のy座標</li>
+</ol>
+</section>
+<section>
+<h3>引数 drawImage(img, dx, dy, dw, dh)</h3>
+<ol>
+<li>image : canvasに描画させるimg要素、canvas要素、video要素</li>
+<li>dx : imageを描画する左上頂点のx座標</li>
+<li>dy : imageを描画する左上頂点のy座標</li>
+<li>dw : imageを伸縮させるときの横幅</li>
+<li>dh : imageを伸縮させるときの縦幅</li>
+</ol>
+</section>
+<section>
+<h3>引数 drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)</h3>
+<ol>
+<li>image : canvasに描画させるimg要素、canvas要素、video要素</li>
+<li>sx : imageの一部分をコピーする左上頂点のx座標</li>
+<li>sy : imageの一部分をコピーする左上頂点のy座標</li>
+<li>sw : imageの一部分をコピーするときの横幅</li>
+<li>sh : imageの一部分をコピーするときの縦幅</li>
+<li>dx : コピーした矩形を描画する左上頂点のx座標</li>
+<li>dy : コピーした矩形を描画する左上頂点のy座標</li>
+<li>dw : コピーした矩形を伸縮させるときの横幅</li>
+<li>dh : コピーした矩形を伸縮させるときの縦幅</li>
+</ol>
+</section>
+</section>
+</article>
+<footer>
+<address>twitter : <a href="http://twitter.com/#!/sandai">@sandai</a></address>
+</footer>
+<script type="text/javascript">
+var elem = ['nav', 'hgroup'];
+for(var i = 0;i < elem.length; i++) {
+    document.createElement(elem[i]);
+}
+// リンクターゲット
+
+var link = document.links, i = 0, l = link.length;
+for(; i < l; i++) {
+    link[i].target = 'blank';
+}
+
+// 目次リンク生成
+
+var head = document.getElementsByTagName('header')[0],
+    nav = document.createElement('nav'),
+    ul = document.createElement('ul'),
+    h2s = document.getElementsByTagName('h2');
+
+for(i = 1; i < h2s.length; i++) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.appendChild(document.createTextNode(h2s[i].firstChild.textContent));
+    a.href = '#' + h2s[i].id;
+    li.appendChild(a);
+    ul.appendChild(li);
+}
+
+nav.appendChild(ul);
+head.appendChild(nav);
+
+// 目次に戻るリンクの生成
+
+nav =  document.createElement('nav');
+
+var sec = document.getElementsByTagName('section');
+for(i = 0; i < sec.length; i++) {
+    if(sec[i].firstChild.nextSibling.nodeName.toLowerCase() === 'h2') {
+        var n = nav.cloneNode(true);
+        var a = document.createElement('a');
+        a.appendChild(document.createTextNode('▲目次'));
+        a.href = '#table';
+        n.appendChild(a);
+        sec[i].appendChild(n);
+    }               
+}
+
+</script>
+</body>
+</html>

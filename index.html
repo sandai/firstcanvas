@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>FirstCanvas</title>
+<link href="/firstcanvas/favicon.ico" rel="shortcut icon" />
+<style type="text/css">
+@font-face {
+	font-family: ipa;
+	src: url('ipagp.ttf') format("truetype");
+}
+
+html, body, div, span, p, address, em, img,
+small, strong, dl, dt, dd, ol, ul, li ,h1
+{
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	height:100%;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+body {
+     font-family: ipa,"メイリオ",Meiryo,'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','ＭＳ Ｐゴシック',Sans-Serif;
+     font-size: 87%;
+     overflow: hidden;
+     height:100%;
+     overflow-x: hidden;
+}
+
+a:link {
+	color: #17630b;
+}
+
+a:visited {
+	color: #721960;
+}
+
+a:hover {
+	color: #fff;
+	background-color:#373737;
+}
+
+.fnCgyItem {
+	display:inline;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+#fnCgyItemClick, .fnCgyItem:hover {
+	background-color: #000;
+	opacity: 0.7;
+	color: #fff;
+}
+
+.fnCgyItemMark {
+	position:relative;
+	top:1px;
+}
+
+.fnListItem {
+	cursor: pointer;
+	color: #fff;
+	word-wrap:break-word;
+	margin:0 0 0 18px;
+}
+
+.fnListItem:hover {
+	background:#000;
+	opacity:0.7;
+}
+
+.clearfix {
+    min-height: 1px;
+}
+
+.clearfix:after {
+	content: "";
+	clear: both;
+	height: 0;
+	display: block;
+	visibility: hidden;
+}
+
+.fnListFloat {
+	opacity: 0.6;
+}
+
+.fnListFloatClick {
+	opacity: 1;
+}
+
+.inputNum, .inputColor, .inputNumTool {
+	border: 0;
+	width: 40px;
+	height: 15px;
+	margin-top: 4px;
+	text-align: center;
+}
+
+.inputNumTool {
+    width: 35px;
+    outline: #00f solid 1px;
+}
+
+.inputStr {
+	border: 0;
+	width: 200px;
+	height: 15px;
+	margin-top: 4px;
+	text-align: center;
+}
+
+.inputColor {
+    width: 150px;
+}
+
+.inputBlur {
+    color:#aaa;
+}
+
+.panelHeading {
+    font-size:140%;
+    margin:12px 0 8px 0;
+    padding:0 10px;
+    background-color:#004;
+    color:#fff;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+}
+
+</style>
+</head>
+<body>
+<noscript>JavaScriptを有効にしてください</noscript>
+<script type="text/javascript" src="cpick.js"></script>
+<script type="text/javascript" src="firstcanvas.js"></script>
+<script type="text/javascript">
+firstCanvas();
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7387130-4']);
+  _gaq.push(['_setDomainName', '.sandai310.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
